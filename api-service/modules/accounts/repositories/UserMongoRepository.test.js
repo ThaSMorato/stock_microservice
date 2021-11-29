@@ -54,6 +54,19 @@ describe("#UserMongoRepository", () => {
     expect(response).toStrictEqual(new User({ ...user, _id: "123" }));
   });
 
+  it("should return null if not found", async () => {
+    db.findOne.mockResolvedValue(null);
+
+    const userMongoRepository = new UserMongoRepository({ db });
+
+    const responseFindById = await userMongoRepository.findById(id);
+
+    const responseFindByLogin = await userMongoRepository.findByLogin("Jhon_Doe");
+
+    expect(responseFindById).toBeNull();
+    expect(responseFindByLogin).toBeNull();
+  });
+
   it("should call updateOne on newPassword", async () => {
     const userMongoRepository = new UserMongoRepository({ db });
     const password = "456";
