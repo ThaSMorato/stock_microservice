@@ -2,7 +2,7 @@ import { describe, jest, it, expect, beforeEach } from "@jest/globals";
 import { ApiError } from "../../../../Error/ApiError";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
-describe("#CreateUserUserCase", () => {
+describe("#CreateUserUseCase", () => {
   const userRepository = {
     findByLogin: jest.fn(),
     create: jest.fn(),
@@ -14,6 +14,8 @@ describe("#CreateUserUserCase", () => {
     name: "John",
     isAdmin: false,
   };
+
+  beforeEach(() => jest.clearAllMocks());
 
   it("should call findByLogin on execute", async () => {
     const createUserUseCase = new CreateUserUseCase({ userRepository });
