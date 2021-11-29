@@ -22,9 +22,11 @@ export class UserMongoRepository {
       _id: new ObjectId(id),
     });
 
-    const user = new User(userData);
+    if (userData) {
+      return new User(userData);
+    }
 
-    return user;
+    return null;
   }
 
   async findByLogin(login) {
@@ -32,9 +34,11 @@ export class UserMongoRepository {
       login,
     });
 
-    const user = new User(userData);
+    if (userData) {
+      return new User(userData);
+    }
 
-    return user;
+    return null;
   }
 
   async newPassword({ password, id }) {
