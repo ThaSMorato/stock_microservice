@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { AuthenticateUser } from "../modules/accounts/useCases/authenticateUser/index.js";
-import { CreateUser } from "../modules/accounts/useCases/createUser/index.js";
+import { AuthenticateUserFactory } from "../modules/accounts/useCases/authenticateUser/index.js";
+import { CreateUserFactory } from "../modules/accounts/useCases/createUser/index.js";
 
 const userRouter = Router();
 
-const createUserHandler = await CreateUser();
+const createUserHandler = await CreateUserFactory.createInstance();
 
-const authenticateUserHandler = await AuthenticateUser();
+const authenticateUserHandler = await AuthenticateUserFactory.createInstance();
 
 userRouter.post("/new", createUserHandler.handle.bind(createUserHandler));
 
