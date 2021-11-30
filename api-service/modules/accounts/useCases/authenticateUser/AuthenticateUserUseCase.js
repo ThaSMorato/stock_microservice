@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
-import { ApiError } from "../../../../Error/ApiError";
+import { ApiError } from "../../../../Error/ApiError.js";
 
 export class AuthenticateUserUseCase {
   constructor({ userRepository }) {
@@ -21,10 +21,10 @@ export class AuthenticateUserUseCase {
       .reduce((acc, key) => ({ ...acc, [key]: user[key] }), {});
 
     const token = jwt.sign(userDTO, process.env.JWT_KEY, {
-      subject: user._id.toString(),
+      subject: user.id.toString(),
     });
 
-    const tokenReturn = { user: { ...userDTO, _id: user._id.toString() }, token };
+    const tokenReturn = { user: { ...userDTO }, token };
 
     return tokenReturn;
   }
