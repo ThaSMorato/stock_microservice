@@ -21,6 +21,7 @@ export async function ensureAuthenticated(request, response, next) {
     if (!user) throw new ApiError("User does not exists", 404);
 
     request.user_id = user_id;
+    request.user_email = user.email;
     request.user_is_admin = user.isAdmin;
 
     next();

@@ -8,7 +8,7 @@ describe("#AuthenticateUserController", () => {
 
   const user = {
     password: "123",
-    login: "Jhon_Doe",
+    email: "Jhon_Doe",
     name: "John",
     isAdmin: false,
   };
@@ -35,7 +35,7 @@ describe("#AuthenticateUserController", () => {
 
     expect(response.json).toBeCalledWith(requestResponse);
     expect(authenticateUserUseCase.execute).toBeCalledWith({
-      login: user.login,
+      email: user.email,
       password: user.password,
     });
   });

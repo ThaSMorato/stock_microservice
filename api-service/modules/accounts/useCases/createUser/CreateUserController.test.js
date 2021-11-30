@@ -8,7 +8,7 @@ describe("#CreateUserController", () => {
 
   const user = {
     password: "123",
-    login: "Jhon_Doe",
+    email: "Jhon_Doe",
     name: "John",
     isAdmin: false,
   };

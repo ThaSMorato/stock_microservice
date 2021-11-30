@@ -7,14 +7,14 @@ export class AuthenticateUserUseCase {
     this.userRepository = userRepository;
   }
 
-  async execute({ login, password }) {
-    const user = await this.userRepository.findByLogin(login);
+  async execute({ email, password }) {
+    const user = await this.userRepository.findByEmail(email);
 
-    if (!user) throw new ApiError("Login or password incorrect", 400);
+    if (!user) throw new ApiError("Email or password incorrect", 400);
 
     const isPasswordCorrect = await compare(password, user.password);
 
-    if (!isPasswordCorrect) throw new ApiError("Login or password incorrect", 400);
+    if (!isPasswordCorrect) throw new ApiError("Email or password incorrect", 400);
 
     const userDTO = Object.keys(user)
       .filter((key) => key !== "password")

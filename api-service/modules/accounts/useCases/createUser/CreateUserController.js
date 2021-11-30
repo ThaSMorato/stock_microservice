@@ -6,11 +6,11 @@ export class CreateUserController {
   }
 
   async handle(request, response) {
-    const { name, login, password, isAdmin = false } = request.body;
+    const { name, email, password, isAdmin = false } = request.body;
 
     const hashPassword = await hash(password, 8);
 
-    await this.createUserUseCase.execute({ name, login, password: hashPassword, isAdmin });
+    await this.createUserUseCase.execute({ name, email, password: hashPassword, isAdmin });
 
     return response.status(201).send();
   }

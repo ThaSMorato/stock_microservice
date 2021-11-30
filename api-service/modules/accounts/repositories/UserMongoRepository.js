@@ -8,10 +8,10 @@ export class UserMongoRepository {
     this.#db = db;
   }
 
-  async create({ password, login, name, isAdmin = false }) {
+  async create({ password, email, name, isAdmin = false }) {
     await this.#db.collection("user").insertOne({
       password,
-      login,
+      email,
       name,
       isAdmin,
     });
@@ -29,9 +29,9 @@ export class UserMongoRepository {
     return null;
   }
 
-  async findByLogin(login) {
+  async findByEmail(email) {
     const userData = await this.#db.collection("user").findOne({
-      login,
+      email,
     });
 
     if (userData) {

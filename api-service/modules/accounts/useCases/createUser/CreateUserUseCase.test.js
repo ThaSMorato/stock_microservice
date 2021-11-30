@@ -4,41 +4,41 @@ import { CreateUserUseCase } from "./CreateUserUseCase";
 
 describe("#CreateUserUseCase", () => {
   const userRepository = {
-    findByLogin: jest.fn(),
+    findByEmail: jest.fn(),
     create: jest.fn(),
   };
 
   const user = {
     password: "123",
-    login: "Jhon_Doe",
+    email: "Jhon_Doe",
     name: "John",
     isAdmin: false,
   };
 
   beforeEach(() => jest.clearAllMocks());
 
-  it("should call findByLogin on execute", async () => {
+  it("should call findByEmail on execute", async () => {
     const createUserUseCase = new CreateUserUseCase({ userRepository });
     await createUserUseCase.execute(user);
-    expect(userRepository.findByLogin).toBeCalledWith(user.login);
+    expect(userRepository.findByEmail).toBeCalledWith(user.email);
   });
 
-  it("should call create if findByLogin returns null", async () => {
-    userRepository.findByLogin.mockResolvedValue(null);
+  it("should call create if findByEmail returns null", async () => {
+    userRepository.findByEmail.mockResolvedValue(null);
     const createUserUseCase = new CreateUserUseCase({ userRepository });
     await createUserUseCase.execute(user);
 
     expect(userRepository.create).toBeCalledWith(user);
   });
 
-  it("should throw an ApiError if findByLogin returns a user", async () => {
-    userRepository.findByLogin.mockResolvedValue(user);
+  it("should throw an ApiError if findByEmail returns a user", async () => {
+    userRepository.findByEmail.mockResolvedValue(user);
     const createUserUseCase = new CreateUserUseCase({ userRepository });
 
     try {
       await createUserUseCase.execute(user);
     } catch (e) {
-      expect(e).toStrictEqual(new ApiError("Login already in use", 400));
+      expect(e).toStrictEqual(new ApiError("Email already in use", 400));
     }
   });
 });

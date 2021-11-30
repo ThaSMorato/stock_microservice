@@ -13,7 +13,7 @@ describe("#UserMongoRepository", () => {
 
   const user = {
     password: "123",
-    login: "Jhon_Doe",
+    email: "Jhon_Doe",
     name: "John",
     isAdmin: false,
   };
@@ -42,14 +42,14 @@ describe("#UserMongoRepository", () => {
     expect(response).toStrictEqual(new User({ ...user, _id: id }));
   });
 
-  it("should call findOne on findByLogin", async () => {
+  it("should call findOne on findByEmail", async () => {
     db.findOne.mockResolvedValue({ ...user, _id: "123" });
 
     const userMongoRepository = new UserMongoRepository({ db });
 
-    const response = await userMongoRepository.findByLogin("Jhon_Doe");
+    const response = await userMongoRepository.findByEmail("Jhon_Doe");
 
-    expect(db.findOne).toBeCalledWith({ login: "Jhon_Doe" });
+    expect(db.findOne).toBeCalledWith({ email: "Jhon_Doe" });
 
     expect(response).toStrictEqual(new User({ ...user, _id: "123" }));
   });
@@ -61,10 +61,10 @@ describe("#UserMongoRepository", () => {
 
     const responseFindById = await userMongoRepository.findById(id);
 
-    const responseFindByLogin = await userMongoRepository.findByLogin("Jhon_Doe");
+    const responseFindByEmail = await userMongoRepository.findByEmail("Jhon_Doe");
 
     expect(responseFindById).toBeNull();
-    expect(responseFindByLogin).toBeNull();
+    expect(responseFindByEmail).toBeNull();
   });
 
   it("should call updateOne on newPassword", async () => {
