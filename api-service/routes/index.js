@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+import { Router } from "express";
+import { userRouter } from "./user.routes.js";
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.status(200).json({})
-});
+const router = Router();
 
-module.exports = router;
+router.use("/users", userRouter);
+
+export { router };
