@@ -1,8 +1,10 @@
-import createError from "http-errors";
 import express from "express";
+import "express-async-errors";
+import "dotenv/config";
+import createError from "http-errors";
 import logger from "morgan";
 
-import indexRouter from "./routes/index";
+import { router } from "./routes/index.js";
 
 const app = express();
 
@@ -10,7 +12,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/", indexRouter);
+app.use(router);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

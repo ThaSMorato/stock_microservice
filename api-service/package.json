@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./index.js",
+    "start": "node --exec babel-node ./bin/www",
+    "dev": "nodemon --exec babel-node ./server.js",
     "test": "set NODE_OPTIONS=--experimental-vm-modules && npx jest --runInBand --watch --config ./jest.config.js",
     "test:cov": "set NODE_OPTIONS=--experimental-vm-modules && npx jest  --config ./jest.config.js --coverage"
   },
@@ -22,6 +22,9 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
     "jest": "^27.4.0",
     "nodemon": "^2.0.15"
   }

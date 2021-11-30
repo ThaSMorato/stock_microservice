@@ -1,4 +1,4 @@
-import { ApiError } from "../../../../Error/ApiError";
+import { ApiError } from "../../../../Error/ApiError.js";
 
 export class CreateUserUseCase {
   userRepository;
