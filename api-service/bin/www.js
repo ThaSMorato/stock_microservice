@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-import app from "../app";
+import app from "../app.js";
 import debugFunction from "debug";
 
 import http from "http";
@@ -15,7 +15,7 @@ const debug = debugFunction("api-service:server");
  */
 
 const port = normalizePort(process.env.PORT || "3001");
-app.set("port", port);
+// app.set("port", port);
 
 /**
  * Create HTTP server.
@@ -83,6 +83,7 @@ function onError(error) {
 
 function onListening() {
   const addr = server.address();
+  console.log("listening on " + port);
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
 }
