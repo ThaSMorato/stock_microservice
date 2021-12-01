@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+service StockService {
+    rpc find (StockId) returns (Stock);
+}
+
+message StockId {
+    string id = 1;
+}
+
+message Stock {
+    string Symbol = 1;
+    string Date = 2;
+    string Time = 3;
+    string Open = 4;
+    string High = 5;
+    string Low = 6;
+    string Close = 7;
+    string Volume = 8;
+    string Name = 9;
+}
