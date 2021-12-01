@@ -1,3 +1,5 @@
+import { StockMongoRepositoryFactory } from "../modules/stock/repositories/StockMongoRepositoryFactory.js";
+
 const StockResponseEventName = Symbol("StockResponseEvent");
 
 export class StockResponseEvent {
@@ -6,12 +8,13 @@ export class StockResponseEvent {
   }
 
   listenToEvent() {
-    this.eventEmitter.on(StockResponseEventName, (payload) => {
-      console.log({ ...payload });
+    this.eventEmitter.on(StockResponseEventName, async ({ stock, user_id }) => {
+      const stockMongoRepo = await StockMongoRepositoryFactory.createInstance();
+      await stockMongoRepo.create(stock, user_id);
     });
   }
 
-  emit(payload) {
-    this.eventEmitter.emit(StockResponseEventName, payload);
+  emit({ stock, user_id }) {
+    this.eventEmitter.emit(StockResponseEventName, { stock, user_id });
   }
 }
