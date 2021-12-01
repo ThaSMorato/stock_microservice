@@ -1,3 +1,5 @@
+import { EmailClient } from "../client/EmailClient.js";
+
 const NewPasswordEventName = Symbol("NewPasswordEvent");
 
 export class NewPasswordEvent {
@@ -7,7 +9,8 @@ export class NewPasswordEvent {
 
   listenToEvent() {
     this.eventEmitter.on(NewPasswordEventName, ({ email, password }) => {
-      console.log({ email, password });
+      const emailClient = EmailClient.getInstance();
+      emailClient.sendNewPassword(email, password);
     });
   }
 
