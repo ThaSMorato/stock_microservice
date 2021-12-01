@@ -11,7 +11,6 @@ describe("#CreateUserUseCase", () => {
   const user = {
     password: "123",
     email: "Jhon_Doe",
-    name: "John",
     isAdmin: false,
   };
 

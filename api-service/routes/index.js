@@ -4,7 +4,7 @@ import { userRouter } from "./user.routes.js";
 
 const router = Router();
 
-router.use("/users", userRouter);
+router.use("/", userRouter);
 router.use("/stock", stockRouter);
 
 export { router };

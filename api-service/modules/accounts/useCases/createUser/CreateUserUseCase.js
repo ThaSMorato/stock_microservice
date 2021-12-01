@@ -7,11 +7,11 @@ export class CreateUserUseCase {
     this.userRepository = userRepository;
   }
 
-  async execute({ name, email, password, isAdmin = false }) {
+  async execute({ email, password, isAdmin = false }) {
     const user = await this.userRepository.findByEmail(email);
 
     if (user) throw new ApiError("Email already in use", 400);
 
-    await this.userRepository.create({ name, email, password, isAdmin });
+    await this.userRepository.create({ email, password, isAdmin });
   }
 }

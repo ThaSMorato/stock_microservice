@@ -10,12 +10,12 @@ const createUserHandler = await CreateUserFactory.createInstance();
 const authenticateUserHandler = await AuthenticateUserFactory.createInstance();
 const newPasswordHandler = await NewPasswordFactory.createInstance();
 
-userRouter.post("/new", createUserHandler.handle.bind(createUserHandler));
+userRouter.post("/register", createUserHandler.handle.bind(createUserHandler));
 
 userRouter.post("/login", authenticateUserHandler.handle.bind(authenticateUserHandler));
 
 userRouter.patch(
-  "/reset/password",
+  "/users/reset/password",
   ensureAuthenticated,
   newPasswordHandler.handle.bind(newPasswordHandler)
 );

@@ -8,11 +8,10 @@ export class UserMongoRepository {
     this.#db = db;
   }
 
-  async create({ password, email, name, isAdmin = false }) {
+  async create({ password, email, isAdmin = false }) {
     await this.#db.collection("user").insertOne({
       password,
       email,
-      name,
       isAdmin,
     });
   }
