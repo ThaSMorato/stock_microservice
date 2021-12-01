@@ -46,3 +46,6 @@ services:
       - MONGODB_PORT=27017
       - JWT_KEY=07ed6d3a2a485ede0afd99b17ebbb448
       - SERVICE_HOST=stock_service
+      - APP_EMAIL_SERVICE=youremailservice
+      - APP_EMAIL_LOGIN=youremail@youremailservice.com
+      - APP_EMAIL_PASSWORD=yourpassword
