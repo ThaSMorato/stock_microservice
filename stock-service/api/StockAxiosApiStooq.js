@@ -4,7 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import csv from "csv-parser";
 
-const token = "sd2t2ohlcvn";
+const token = process.env.STOOQ_TOKEN;
 
 const type = "csv";
 
