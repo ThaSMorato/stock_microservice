@@ -38,6 +38,6 @@ describe("#Unit test ApiStockRepository", () => {
 
     const result = await apiStockRepository.getStockById(id);
 
-    expect(result).toStrictEqual({ [id]: resolvedMockValue });
+    expect(result).toStrictEqual(resolvedMockValue[0]);
   });
 });
