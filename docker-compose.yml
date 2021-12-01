@@ -2,7 +2,7 @@ version: "3.7"
 
 networks:
   default:
-    name: video_api_network
+    name: stock_network
 
 services:
   mongo:
@@ -13,24 +13,36 @@ services:
       - 27017:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME=thalesmorato
-      - MONGO_INITDB_ROOT_PASSWORD=senha123
-  # app:
-  #   build: .
-  #   container_name: video_api
-  #   ports:
-  #     - 3333:3333
-  #     - 9229:9229 #Você pode inserir essa porta tbm pra poder usar o debug
-  #   volumes:
-  #     - .:/usr/app
-  #     - /usr/src/app/node_modules
-  #   links:
-  #     - mongo
-  #   depends_on:
-  #     - mongo
-  #   environment:
-  #     - MONGODB_DATABASE=movie_db
-  #     - MONGODB_USERNAME=thalesmorato
-  #     - MONGODB_PASSWORD=senha123
-  #     - MONGODB_HOST=mongo
-  #     - MONGODB_PORT=27017
-  #     - JWT_KEY=07ed6d3a2a485ede0afd99b17ebbb448
+      - MONGO_INITDB_ROOT_PASSWORD=pass123
+
+  stock_service:
+    build: ./stock-service
+    container_name: stock_service
+    volumes:
+      - ./stock-service:/usr/app
+      - /usr/app/node_modules
+    environment:
+      - STOOQ_TOKEN=sd2t2ohlcvn
+
+  app:
+    build: ./api-service
+    container_name: stock_api
+    ports:
+      - 3001:3001
+    volumes:
+      - ./api-service:/usr/app
+      - /usr/app/node_modules
+    links:
+      - mongo
+      - stock_service
+    depends_on:
+      - mongo
+      - stock_service
+    environment:
+      - MONGODB_DATABASE=stock_db
+      - MONGODB_USERNAME=thalesmorato
+      - MONGODB_PASSWORD=pass123
+      - MONGODB_HOST=mongo
+      - MONGODB_PORT=27017
+      - JWT_KEY=07ed6d3a2a485ede0afd99b17ebbb448
+      - SERVICE_HOST=stock_service

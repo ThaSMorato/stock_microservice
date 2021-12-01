@@ -6,13 +6,15 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const host = process.env.SERVICE_HOST;
+
 export class ProtoClient {
   static #INSTANCE;
 
   constructor() {
     this.stockDefinition = grpc.load(path.resolve(__dirname, "./stock.proto"));
     this.stockClient = new this.stockDefinition.StockService(
-      "localhost:50051",
+      `${host}:50051`,
       grpc.credentials.createInsecure()
     );
   }
