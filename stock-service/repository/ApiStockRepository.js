@@ -4,9 +4,9 @@ class ApiStockRepository {
   }
 
   async getStockById(id) {
-    const stock = await this.api.get({ id });
+    const [stock] = await this.api.get({ id });
 
-    return stock[0];
+    return stock;
   }
 }
 
