@@ -1,0 +1,346 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Stock API",
+    "description": "This is a Stock API",
+    "version": "1.0.0",
+    "contact": {
+      "email": "tha.s.morato@gmail.com"
+    }
+  },
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create an User",
+        "description": "Create a new User, returns a random password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "isAdmin": {
+                    "type": "boolean",
+                    "allowEmptyValue": true
+                  }
+                },
+                "example": {
+                  "email": "youremail@gmail.com",
+                  "isAdmin": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email already in use"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login with an email and password",
+        "description": "Login with an email and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "youremail@gmail.com",
+                  "password": "yourpassword"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "isAdmin": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email or password incorrect"
+          }
+        }
+      }
+    },
+    "/history": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Check the user history search",
+        "description": "Check the user history search",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "schema": {
+              "type": "string",
+              "required": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the list of stocks searched",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Symbol": {
+                        "type": "string"
+                      },
+                      "Date": {
+                        "type": "string"
+                      },
+                      "Time": {
+                        "type": "string"
+                      },
+                      "Open": {
+                        "type": "string"
+                      },
+                      "High": {
+                        "type": "string"
+                      },
+                      "Low": {
+                        "type": "string"
+                      },
+                      "Close": {
+                        "type": "string"
+                      },
+                      "Volume": {
+                        "type": "string"
+                      },
+                      "Name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication needed, Invalid token type or Invalid token"
+          },
+          "404": {
+            "description": "User does not exists"
+          }
+        }
+      }
+    },
+    "/stats": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get the total time where the stocks were searched",
+        "description": "Get the total time where the stocks were searched",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "schema": {
+              "type": "string",
+              "required": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the amount for each stock id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "stock": {
+                        "type": "string"
+                      },
+                      "total": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication needed, Invalid token type or Invalid token"
+          },
+          "403": {
+            "description": "Only admins can access"
+          },
+          "404": {
+            "description": "User does not exists"
+          }
+        }
+      }
+    },
+    "/users/reset/password": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Get a new password and receive it on email",
+        "description": "Get a new password and receive it on email",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "schema": {
+              "type": "string",
+              "required": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "password changed successfully"
+          },
+          "401": {
+            "description": "Authentication needed, Invalid token type or Invalid token"
+          },
+          "404": {
+            "description": "User does not exists"
+          }
+        }
+      }
+    },
+    "/stock": {
+      "get": {
+        "tags": ["Stock"],
+        "summary": "Search for a stock by id",
+        "description": "Search for a stock by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "schema": {
+              "type": "string",
+              "required": true
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "schema": {
+              "type": "string",
+              "required": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a stock info for the day",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Symbol": {
+                      "type": "string"
+                    },
+                    "Date": {
+                      "type": "string"
+                    },
+                    "Time": {
+                      "type": "string"
+                    },
+                    "Open": {
+                      "type": "string"
+                    },
+                    "High": {
+                      "type": "string"
+                    },
+                    "Low": {
+                      "type": "string"
+                    },
+                    "Close": {
+                      "type": "string"
+                    },
+                    "Volume": {
+                      "type": "string"
+                    },
+                    "Name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Stock not found or Query must be provided"
+          },
+          "401": {
+            "description": "Authentication needed, Invalid token type or Invalid token"
+          },
+          "404": {
+            "description": "User does not exists"
+          }
+        }
+      }
+    }
+  }
+}
