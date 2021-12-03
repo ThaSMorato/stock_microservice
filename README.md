@@ -75,3 +75,9 @@ _`it's important to create an user and login-in before you test other routes`_
   stock searched and how many times it was searched
 - (`GET`)/stock - _`Bearer token needed`_ - Send a stock id as query parameter `q` and it will
   return the stock if it exists
+
+## Tests
+
+Run `npm run test` for Tests
+
+`****Remember starting the stock api locally, in Docker the api is not visible outside it's network****`

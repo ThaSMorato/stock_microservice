@@ -12,4 +12,8 @@ export class Mongo {
 
     return Mongo.#INSTANCE.#db;
   }
+
+  static async closeConnection() {
+    await MongoClient.getInstance().close();
+  }
 }

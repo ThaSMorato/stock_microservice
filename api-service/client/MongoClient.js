@@ -24,4 +24,8 @@ export class MongoClient {
     const db = this.#client.db(this.movie_db);
     return db;
   }
+
+  async close() {
+    await this.#client.close();
+  }
 }
