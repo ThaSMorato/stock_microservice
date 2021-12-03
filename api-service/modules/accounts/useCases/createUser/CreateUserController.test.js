@@ -18,17 +18,17 @@ describe("#CreateUserController", () => {
 
   const response = {
     status: () => response,
-    send: jest.fn(),
+    json: jest.fn(),
   };
 
   beforeEach(() => jest.clearAllMocks());
 
-  it("should call execute and send on handler call", async () => {
+  it("should call execute and json on handler call", async () => {
     const createUserController = new CreateUserController({ createUserUseCase });
 
     await createUserController.handle(request, response);
 
-    expect(response.send).toBeCalled();
+    expect(response.json).toBeCalled();
     expect(createUserUseCase.execute).toBeCalled();
   });
 });
