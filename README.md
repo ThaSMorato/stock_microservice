@@ -39,7 +39,7 @@ from [MongoDB Atlas](https://www.mongodb.com/atlas)
 
 Then run `npm start` on each dir
 
-The API will be on port 3001, unles you change in the enviroment variables
+The API will be on port 3001, unles you have changed it in the enviroment variables
 
 ## Docker
 
@@ -52,8 +52,8 @@ After changing the email credentials in docker-compose.yml file, you can run:
   docker-compose up
 ```
 
-The API will be on port 3001, unles you change in the enviroment variables, it's important to change
-the props `ports` too.
+The API will be on port 3001, unles you have changed it in the enviroment variables, it's important
+to change the props `ports` too.
 
 ## Insomnia
 
