@@ -50,7 +50,7 @@ describe("#UserMongoRepository", () => {
 
     expect(db.findOne).toBeCalledWith({ email: "Jhon_Doe" });
 
-    expect(response).toStrictEqual(new User({ ...user, _id: "123" }));
+    expect(response).toStrictEqual({ ...user, _id: "123" });
   });
 
   it("should return null if not found", async () => {

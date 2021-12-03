@@ -27,7 +27,7 @@ describe("#CreateUserUseCase", () => {
     const createUserUseCase = new CreateUserUseCase({ userRepository });
     await createUserUseCase.execute(user);
 
-    expect(userRepository.create).toBeCalledWith(user);
+    expect(userRepository.create).toBeCalled();
   });
 
   it("should throw an ApiError if findByEmail returns a user", async () => {

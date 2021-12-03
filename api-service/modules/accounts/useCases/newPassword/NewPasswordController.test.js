@@ -4,6 +4,13 @@ import { NewPasswordController } from "./NewPasswordController";
 describe("#NewPasswordController", () => {
   const request = {
     user_id: "123",
+    user_email: "user@example.com",
+  };
+
+  const user = {
+    id: "123",
+    email: "user@example.com",
+    isAdmin: true,
   };
 
   const response = {
@@ -17,12 +24,16 @@ describe("#NewPasswordController", () => {
 
   beforeEach(() => jest.clearAllMocks());
 
-  it("should call execute with a new hashed password and the user id from request and call send", async () => {
+  it("should call execute  and call send", async () => {
+    newPasswordUseCase.execute.mockResolvedValue({ ...user, password: "123123" });
     const newPasswordController = new NewPasswordController({ newPasswordUseCase });
 
     await newPasswordController.handle(request, response);
 
     expect(response.send).toBeCalled();
-    expect(newPasswordUseCase.execute).toBeCalled();
+    expect(newPasswordUseCase.execute).toBeCalledWith({
+      email: request.user_email,
+      user_id: request.user_id,
+    });
   });
 });

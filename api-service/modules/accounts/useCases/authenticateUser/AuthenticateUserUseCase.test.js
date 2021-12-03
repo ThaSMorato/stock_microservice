@@ -1,6 +1,7 @@
 import { describe, jest, it, expect, beforeEach } from "@jest/globals";
 import { hash } from "bcrypt";
 import { ApiError } from "../../../../Error/ApiError";
+import { User } from "../../entities/User";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
 describe("#AuthenticateUserUseCase", () => {
@@ -13,7 +14,6 @@ describe("#AuthenticateUserUseCase", () => {
   const user = {
     password: "123",
     email: "Jhon_Doe",
-    name: "John",
     isAdmin: false,
   };
 
@@ -56,7 +56,7 @@ describe("#AuthenticateUserUseCase", () => {
     userRepository.findByEmail.mockResolvedValue({
       ...user,
       password,
-      id: 123456,
+      _id: 123456,
     });
 
     const authenticateUserUseCase = new AuthenticateUserUseCase({ userRepository });
@@ -66,12 +66,13 @@ describe("#AuthenticateUserUseCase", () => {
       password: "123",
     });
 
-    expect(user_response).toStrictEqual({
-      id: 123456,
-      isAdmin: false,
-      email: "Jhon_Doe",
-      name: "John",
-    });
+    expect(user_response).toStrictEqual(
+      new User({
+        _id: 123456,
+        isAdmin: false,
+        email: "Jhon_Doe",
+      })
+    );
     expect(typeof token).toBe("string");
   });
 });

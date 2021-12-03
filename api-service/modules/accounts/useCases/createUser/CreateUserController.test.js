@@ -7,7 +7,6 @@ describe("#CreateUserController", () => {
   };
 
   const user = {
-    password: "123",
     email: "Jhon_Doe",
     isAdmin: false,
   };
@@ -24,6 +23,7 @@ describe("#CreateUserController", () => {
   beforeEach(() => jest.clearAllMocks());
 
   it("should call execute and json on handler call", async () => {
+    createUserUseCase.execute.mockResolvedValue({ ...user, password: "123123" });
     const createUserController = new CreateUserController({ createUserUseCase });
 
     await createUserController.handle(request, response);
