@@ -29,6 +29,8 @@
     "@babel/core": "^7.16.0",
     "@babel/node": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
-    "jest": "^27.4.0"
+    "faker": "^5.5.3",
+    "jest": "^27.4.0",
+    "supertest": "^6.1.6"
   }
 }
