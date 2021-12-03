@@ -34,7 +34,7 @@ export class UserMongoRepository {
     });
 
     if (userData) {
-      return new User(userData);
+      return userData;
     }
 
     return null;

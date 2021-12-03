@@ -1,6 +1,3 @@
-import { hash } from "bcrypt";
-import { getRandomString } from "../../../../utils/getRandomString.js";
-
 export class CreateUserController {
   constructor({ createUserUseCase }) {
     this.createUserUseCase = createUserUseCase;
@@ -9,12 +6,8 @@ export class CreateUserController {
   async handle(request, response) {
     const { email, isAdmin = false } = request.body;
 
-    const password = getRandomString(8);
+    const user = await this.createUserUseCase.execute({ email, isAdmin });
 
-    const hashPassword = await hash(password, 8);
-
-    await this.createUserUseCase.execute({ email, password: hashPassword, isAdmin });
-
-    return response.status(201).json({ email, password });
+    return response.status(201).json({ email, password: user.password });
   }
 }

@@ -1,3 +1,6 @@
+import { User } from "../../entities/User.js";
+import { hash } from "bcrypt";
+
 export class NewPasswordUseCase {
   userRepository;
 
@@ -5,7 +8,17 @@ export class NewPasswordUseCase {
     this.userRepository = userRepository;
   }
 
-  async execute({ password, user_id }) {
-    await this.userRepository.newPassword({ password, id: user_id });
+  async execute({ email, user_id }) {
+    const user_data = await this.userRepository.findByEmail(email);
+
+    const user = new User(user_data);
+
+    user.resetPassword();
+
+    const hashPassword = await hash(user.password, 8);
+
+    await this.userRepository.newPassword({ password: hashPassword, id: user_id });
+
+    return user;
   }
 }

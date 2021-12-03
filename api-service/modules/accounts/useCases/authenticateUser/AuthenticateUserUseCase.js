@@ -1,6 +1,7 @@
 import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ApiError } from "../../../../Error/ApiError.js";
+import { User } from "../../entities/User.js";
 
 export class AuthenticateUserUseCase {
   constructor({ userRepository }) {
@@ -8,23 +9,21 @@ export class AuthenticateUserUseCase {
   }
 
   async execute({ email, password }) {
-    const user = await this.userRepository.findByEmail(email);
+    const user_object = await this.userRepository.findByEmail(email);
 
-    if (!user) throw new ApiError("Email or password incorrect", 400);
+    if (!user_object) throw new ApiError("Email or password incorrect", 400);
 
-    const isPasswordCorrect = await compare(password, user.password);
+    const isPasswordCorrect = await compare(password, user_object.password);
 
     if (!isPasswordCorrect) throw new ApiError("Email or password incorrect", 400);
 
-    const userDTO = Object.keys(user)
-      .filter((key) => key !== "password")
-      .reduce((acc, key) => ({ ...acc, [key]: user[key] }), {});
+    const user = new User(user_object);
 
-    const token = jwt.sign(userDTO, process.env.JWT_KEY, {
+    const token = jwt.sign(user.get(), process.env.JWT_KEY, {
       subject: user.id.toString(),
     });
 
-    const tokenReturn = { user: { ...userDTO }, token };
+    const tokenReturn = { user, token };
 
     return tokenReturn;
   }
