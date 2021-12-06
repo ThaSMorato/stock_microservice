@@ -10,4 +10,8 @@ export class Stock {
     this.Volume = Volume;
     this.Name = Name;
   }
+
+  validate() {
+    return this.Date !== "N/D";
+  }
 }

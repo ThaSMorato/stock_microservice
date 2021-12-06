@@ -7,10 +7,12 @@ export class StockProtoRepository {
   }
 
   async findById(id) {
-    const stock = await this.#client.find({ id });
+    const stockData = await this.#client.find({ id });
 
-    if (stock.Date !== "N/D") {
-      return new Stock(stock);
+    const stock = new Stock(stockData);
+
+    if (stock.validate()) {
+      return stock;
     }
 
     return null;
