@@ -66,11 +66,11 @@ describe("#UserMongoRepository", () => {
     expect(responseFindByEmail).toBeNull();
   });
 
-  it("should call updateOne on newPassword", async () => {
+  it("should call updateOne on setNewPassword", async () => {
     const userMongoRepository = new UserMongoRepository({ db });
     const password = "456";
 
-    await userMongoRepository.newPassword({ password, id });
+    await userMongoRepository.setNewPassword({ password, id });
 
     expect(db.updateOne).toBeCalledWith(
       { _id: new ObjectId(id) },

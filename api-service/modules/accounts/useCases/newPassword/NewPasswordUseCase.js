@@ -17,7 +17,7 @@ export class NewPasswordUseCase {
 
     const hashPassword = await hash(user.password, 8);
 
-    await this.userRepository.newPassword({ password: hashPassword, id: user_id });
+    await this.userRepository.setNewPassword({ password: hashPassword, id: user_id });
 
     return user;
   }

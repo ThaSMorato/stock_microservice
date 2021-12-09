@@ -40,7 +40,7 @@ export class UserMongoRepository {
     return null;
   }
 
-  async newPassword({ password, id }) {
+  async setNewPassword({ password, id }) {
     await this.#db.collection("user").updateOne(
       {
         _id: new ObjectId(id),
