@@ -22,10 +22,15 @@ export class ProtoClient {
   #promisefy(method) {
     return (params) => {
       return new Promise((resolve, rejects) => {
-        this.stockClient[method](params, (err, response) => {
-          if (err) return rejects(err);
-          return resolve(response);
-        });
+        const timeAllowed = 7000;
+        this.stockClient[method](
+          params,
+          { deadline: new Date(Date.now() + timeAllowed) },
+          (err, response) => {
+            if (err) return rejects(err);
+            return resolve(response);
+          }
+        );
       });
     };
   }
