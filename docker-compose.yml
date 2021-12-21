@@ -47,6 +47,6 @@ services:
       - JWT_KEY=07ed6d3a2a485ede0afd99b17ebbb448
       - SERVICE_HOST=stock_service
       - APP_EMAIL_SERVICE=gmail
-      - APP_EMAIL_LOGIN=tsmsoftwaresuporte@gmail.com
-      - APP_EMAIL_PASSWORD=SenhaMuitoForte123*
+      - APP_EMAIL_LOGIN=youremail
+      - APP_EMAIL_PASSWORD=yourpassword
       - PORT=3001
